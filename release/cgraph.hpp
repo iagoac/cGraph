@@ -6,6 +6,7 @@
 
 template <typename T = int, typename P = int>
 class Graph {
+private:
   int nodes = 0;
   int edges = 0;
 
@@ -47,17 +48,28 @@ public:
   }
 
   void add_edge(int i, int j, P value) {
-    this->edge[i][j] = value;
-    this->edge[j][i] = value;
-    this->neighboors_list[i].push_back(j);
-    this->neighboors_list[j].push_back(i);
-    this->edges++;
+    if (i < this->nodes && j < this->nodes && i >= 0 && j >= 0) {
+      this->edge[i][j] = value;
+      this->edge[j][i] = value;
+      this->neighboors_list[i].push_back(j);
+      this->neighboors_list[j].push_back(i);
+      this->edges++;
+    } else {
+      std::cout << "Nodes does not exist" << std::endl;
+    }
   }
 
   void remove_edge(int i, int j) {
-    this->neighboors_list[i].remove(j);
-    this->neighboors_list[j].remove(i);
-    this->edges--;
+    if () {
+      std::cout << "Edge does not exists!" << std::endl;
+    }
+    if (i < this->nodes && j < this->nodes && i >= 0 && j >= 0) {
+      this->neighboors_list[i].remove(j);
+      this->neighboors_list[j].remove(i);
+      this->edges--;
+    } else {
+      std::cout << "Nodes does not exist" << std::endl;
+    }
   }
 
   void remove_all_edges() {
@@ -69,28 +81,13 @@ public:
 
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-template <typename T = int>
-class Digraph {
-  int nodes = 0;
-  int arcs = 0;
-
-  std::vector<T> node;
-
-public:
-  Digraph(){};
-};
+// template <typename T = int>
+// class Digraph {
+//   int nodes = 0;
+//   int arcs = 0;
+//
+//   std::vector<T> node;
+//
+// public:
+//   Digraph(){};
+// };

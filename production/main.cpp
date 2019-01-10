@@ -3,12 +3,13 @@
 
 int main(int argc, char* const* argv) {
   Graph g;
-  g.add_node();
-
-  g.add_node();
-  g.add_node(25);
+  for (int i = 0; i < 10; i++) {
+    g.add_node();
+  }
 
   g.print_nodes();
-  
+
+  g.add_edge(0,2);
+
   // std::cout << node
 }
