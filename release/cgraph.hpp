@@ -47,6 +47,18 @@ public:
     }
   }
 
+  void add_edge(int i, int j) {
+    if (i < this->nodes && j < this->nodes && i >= 0 && j >= 0) {
+      this->edge[i][j] = static_cast<P> (0);
+      this->edge[j][i] = static_cast<P> (0);
+      this->neighboors_list[i].push_back(j);
+      this->neighboors_list[j].push_back(i);
+      this->edges++;
+    } else {
+      std::cout << "Nodes does not exist" << std::endl;
+    }
+  }
+
   void add_edge(int i, int j, P value) {
     if (i < this->nodes && j < this->nodes && i >= 0 && j >= 0) {
       this->edge[i][j] = value;
@@ -60,9 +72,13 @@ public:
   }
 
   void remove_edge(int i, int j) {
-    if () {
-      std::cout << "Edge does not exists!" << std::endl;
+    for (int k : this->neighboors_list[i]) {
+      if (k == j) {
+        std::cout << "Edge does not exists!" << std::endl;
+        return;
+      }
     }
+
     if (i < this->nodes && j < this->nodes && i >= 0 && j >= 0) {
       this->neighboors_list[i].remove(j);
       this->neighboors_list[j].remove(i);
@@ -79,6 +95,7 @@ public:
     this->edges = 0;
   }
 
+  void read_file(std::string filename);
 };
 
 // template <typename T = int>
