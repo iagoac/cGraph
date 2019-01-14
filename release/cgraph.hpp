@@ -1,3 +1,6 @@
+#ifndef CGRAPH_RELEASE_CGRAPH_H
+#define CGRAPH_RELEASE_CGRAPH_H
+
 #include <vector>
 #include <list>
 #include <stdio.h>
@@ -124,3 +127,5 @@ public:
 // public:
 //   Digraph(){};
 // };
+
+#endif // CGRAPH_RELEASE_CGRAPH_H
