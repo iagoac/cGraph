@@ -114,8 +114,6 @@ public:
     }
     this->edges = 0;
   }
-
-  void read_file(std::string filename);
 };
 
 // template <typename T = int>
