@@ -1,11 +1,12 @@
 #ifndef CGRAPH_RELEASE_CGRAPH_H
 #define CGRAPH_RELEASE_CGRAPH_H
 
-#include <vector>
-#include <list>
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
+#include <list>
 #include <iostream>
+#include <fstream>
 
 template <typename T = int, typename P = int>
 class Graph {
