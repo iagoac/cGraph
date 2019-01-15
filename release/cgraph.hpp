@@ -7,21 +7,23 @@
 #include <list>
 #include <iostream>
 
-/* ------------------------------------
-     Basic graph class implementation
-   ------------------------------------ */
+/* --------------------------------
+     Digraph class implementation
+   -------------------------------- */
 
 template <typename T = int, typename P = int>
-class BaseGraph {
+class Digraph {
 protected:
   int nodes_count = 0;
   int edges_count = 0;
 
 public:
-  BaseGraph(){};
+  Digraph(){};
   std::vector<T> node;
   std::vector<std::vector<P>> edge;
-  std::vector<std::list<int>> neighboors_list;
+  std::vector<std::list<int>> adjacency_list;
+  std::vector<std::list<int>> in_node;
+  std::vector<std::list<int>> out_node;
 
   int num_nodes() {
     return this->nodes_count;
@@ -48,21 +50,22 @@ public:
     this->edge.push_back(v);
 
     std::list<int> aux_list;
-    this->neighboors_list.push_back(aux_list);
+    this->adjacency_list.push_back(aux_list);
+    this->in_node.push_back(aux_list);
+    this->out_node.push_back(aux_list);
+
   }
 
   void add_node() {
     this->add_node(static_cast<T> (0));
   }
 
-  void remove_last_node() {
-    this->node.pop_back();
-    this->nodes_count--;
-  }
-
   void remove_all_nodes() {
     this->remove_all_edges();
     this->node.resize(0);
+    this->adjacency_list.resize(0);
+    this->in_node.resize(0);
+    this->out_node.resize(0);
     this->nodes_count = 0;
   }
 
@@ -75,9 +78,9 @@ public:
   void add_arc(int i, int j, P value) {
     if (i < this->num_nodes() && j < this->num_nodes() && i >= 0 && j >= 0) {
       this->edge[i][j] = value;
-      // this->edge[j][i] = value;
-      this->neighboors_list[i].push_back(j);
-      // this->neighboors_list[j].push_back(i);
+      this->adjacency_list[i].push_back(j);
+      this->in_node[j].push_back(i);
+      this->out_node[i].push_back(j);
       this->edges_count++;
     } else {
       std::cout << "Nodes does not exist" << std::endl;
@@ -98,12 +101,13 @@ public:
 
     if (i < this->nodes_count && j < this->nodes_count && i >= 0 && j >= 0) {
       this->neighboors_list[i].remove(j);
+      this->in_node[j].remove(i);
+      this->out_node[i].remove(j);
       this->edges_count--;
     } else {
       std::cout << "Nodes does not exist" << std::endl;
     }
   }
-
 };
 
 
@@ -111,7 +115,7 @@ public:
      Graph class implementation
    ------------------------------ */
 template <typename T = int, typename P = int>
-class Graph: public BaseGraph<T, P> {
+class Graph: public Digraph<T, P> {
 public:
   Graph(){};
 
@@ -140,15 +144,6 @@ public:
     }
     this->edges_count = 0;
   }
-};
-
-/* --------------------------------
-     Digraph class implementation
-   -------------------------------- */
-template <typename T = int, typename P = int>
-class Digraph: public BaseGraph<T, P> {
-public:
-  Digraph(){};
 };
 
 #endif // CGRAPH_RELEASE_CGRAPH_H
