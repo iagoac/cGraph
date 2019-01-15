@@ -21,11 +21,11 @@ public:
   std::vector<std::vector<P>> edge;
   std::vector<std::list<int>> neighboors_list;
 
-  int nodes() {
+  int num_nodes() {
     return this->nodes_count;
   }
 
-  int edges() {
+  int num_edges() {
     return this->edges_count;
   }
 
