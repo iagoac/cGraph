@@ -120,17 +120,20 @@ public:
   Graph(){};
 
   void add_edge(int i, int j) {
-    this->add_arc(i, j);
-    this->add_arc(j, i);
+    this->Digraph<T,P>::add_arc(i, j);
+    this->Digraph<T,P>::add_arc(j, i);
     this->edges_count--;
   }
+
+  void add_arc(int i, int j) { this->add_edge(i, j); };
 
   void add_edge(int i, int j, P value) {
-    this->add_arc(i, j, value);
-    this->add_arc(j, i, value);
+    this->Digraph<T,P>::add_arc(i, j, value);
+    this->Digraph<T,P>::add_arc(j, i, value);
     this->edges_count--;
   }
 
+  void add_arc(int i, int j, P value) { this->add_edge(i, j, value); };
 
   void remove_edge(int i, int j) {
     this->remove_arc(i, j);
