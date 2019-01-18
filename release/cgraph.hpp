@@ -108,6 +108,10 @@ public:
       std::cout << "Nodes does not exist" << std::endl;
     }
   }
+
+  void add_edge(int i, int j) { this->add_arc(i,j); }
+  void add_edge(int i, int j, P value { this->add_arc(i, j, value); }
+  void remove_edge(int i, int j) { this->remove_arc(i, j); }
 };
 
 
@@ -125,28 +129,31 @@ public:
     this->edges_count--;
   }
 
-  void add_arc(int i, int j) { this->add_edge(i, j); };
-
   void add_edge(int i, int j, P value) {
     this->Digraph<T,P>::add_arc(i, j, value);
     this->Digraph<T,P>::add_arc(j, i, value);
     this->edges_count--;
   }
 
-  void add_arc(int i, int j, P value) { this->add_edge(i, j, value); };
-
   void remove_edge(int i, int j) {
-    this->remove_arc(i, j);
-    this->remove_arc(j, i);
+    this->Digraph<T,P>::remove_arc(i, j);
+    this->Digraph<T,P>::remove_arc(j, i);
     this->edges_count++;
   }
 
   void remove_all_edges() {
     for (int i = 0; i < this->nodes(); i++) {
       this->neighboors_list[i].clear();
+      this->in_node[i].clear();
+      this->out_node[i].clear();
     }
     this->edges_count = 0;
   }
+
+  void add_arc(int i, int j) { this->add_edge(i, j); };
+  void add_arc(int i, int j, P value) { this->add_edge(i, j, value); };
+  void remove_arc(int i, int j) { this->remove_edge(i, j); }
+  void remove_all_arcs(void) { this->remove_all_edges(); }
 };
 
 #endif // CGRAPH_RELEASE_CGRAPH_H
