@@ -110,7 +110,7 @@ public:
   }
 
   void add_edge(int i, int j) { this->add_arc(i,j); }
-  void add_edge(int i, int j, P value { this->add_arc(i, j, value); }
+  void add_edge(int i, int j, P value) { this->add_arc(i, j, value); }
   void remove_edge(int i, int j) { this->remove_arc(i, j); }
 };
 
