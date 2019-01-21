@@ -92,7 +92,7 @@ public:
   }
 
   void remove_arc(int i, int j) {
-    for (int k : this->neighboors_list[i]) {
+    for (int k : this->adjacency_list[i]) {
       if (k == j) {
         std::cout << "Edge does not exists!" << std::endl;
         return;
