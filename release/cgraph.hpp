@@ -24,6 +24,7 @@ public:
   std::vector<std::list<int>> adjacency_list;
   std::vector<std::list<int>> in_node;
   std::vector<std::list<int>> out_node;
+  std::vector<int> terminals;
 
   int num_nodes() {
     return this->nodes_count;
@@ -39,6 +40,7 @@ public:
 
   void add_node(T new_node) {
     this->node.push_back(new_node);
+    this->terminals.push_back(0);
 
     P aux;
     for (int i = 0; i < this->edge.size(); i++) {
@@ -112,6 +114,8 @@ public:
   void add_edge(int i, int j) { this->add_arc(i,j); }
   void add_edge(int i, int j, P value) { this->add_arc(i, j, value); }
   void remove_edge(int i, int j) { this->remove_arc(i, j); }
+  bool is_terminal(int i) { return (this->terminal[i]); }
+  void set_terminal(int i) { this->terminal[i] = 1; }
 };
 
 
