@@ -55,6 +55,12 @@ public:
     this->add_node(static_cast<T> (0));
   }
 
+  void add_nodes(int quantity) {
+    for (int i = 0; i < quantity; i++) {
+      this->add_node();
+    }
+  }
+
   void remove_all_nodes() {
     this->remove_all_edges();
     this->node.resize(0);
