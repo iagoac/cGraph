@@ -122,38 +122,44 @@ public:
   /*********************************************************************
   ********************** Shortest path algorithms **********************
   *********************************************************************/
-std::vector<int> dijkstra(std::vector<std::vector<double>> costs) {
-  /* Creating the Dijktra's predefined and distance vectors */
-  std::vector<double> dist(this->num_nodes(), std::numeric_limits<double>::max());
-  std::vector<int>    prev(this->num_nodes(), -1);
-  dist[0] = 0.0;
+  std::vector<int> dijkstra(std::vector<std::vector<double>> costs) {
+    /* Creating the Dijktra's predefined and distance vectors */
+    std::vector<double> dist(this->num_nodes(), std::numeric_limits<double>::max());
+    std::vector<int>    prev(this->num_nodes(), -1);
+    dist[0] = 0.0;
 
-  /* Priority queue of nodes that were not yet analyzed
-  Queue uses a std::pair<int, int> where the first int
-  is the distance and the second is the node number */
-  std::priority_queue<std::pair<int, int>,
-                      std::vector<std::pair<int,int>>,
-                      std::greater<std::pair<int,int>>> q;
-  q.emplace(dist[0], 0);
+    /* Priority queue of nodes that were not yet analyzed
+    Queue uses a std::pair<int, int> where the first int
+    is the distance and the second is the node number */
+    std::priority_queue<std::pair<int, int>,
+                        std::vector<std::pair<int,int>>,
+                        std::greater<std::pair<int,int>>> q;
+    q.emplace(dist[0], 0);
 
-  while (!q.empty()) {
-    /* Gets the node with minimum distance */
-    int next = q.top().second;
-    q.pop();
+    while (!q.empty()) {
+      /* Gets the node with minimum distance */
+      int next = q.top().second;
+      /* A little hack used with priority queues: see
+      https://stackoverflow.com/a/14009760/9165544 */
+      if (q.top().first != dist[next]) {
+        q.pop();
+        continue;
+      }
+      q.pop();
 
-    /* For all of its neigboors
-    make the dijkstra relaxation step */
-    for (auto j : this->out_node[next]) {
-      int new_dist = dist[next] + costs[next][j];
-      if (dist[j] > new_dist) {
-        prev[j] = next;
-        dist[j] = new_dist;
-        q.emplace(dist[j], j);
+      /* For all of its neigboors
+      make the dijkstra relaxation step */
+      for (auto j : this->out_node[next]) {
+        int new_dist = dist[next] + costs[next][j];
+        if (new_dist < dist[j]) {
+          prev[j] = next;
+          dist[j] = new_dist;
+          q.emplace(dist[j], j);
+        }
       }
     }
-  }
-  /* Returns the shortest path tree */
-  return (prev);
+    /* Returns the shortest path arborescence */
+    return (prev);
   }
 
   std::vector<int> dijkstra(double multiplier) {
@@ -188,6 +194,10 @@ std::vector<int> dijkstra(std::vector<std::vector<double>> costs) {
       }
     }
     /* Returns the shortest path tree */
+    for (int i = 1; i < prev.size(); i++) {
+      std::cout << prev[i] << "-" << i << std::endl;
+    }
+    std::cout << std::endl << std::endl;
     return (prev);
   }
 };
