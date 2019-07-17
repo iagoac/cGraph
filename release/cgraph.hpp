@@ -122,6 +122,40 @@ public:
   /*********************************************************************
   ********************** Shortest path algorithms **********************
   *********************************************************************/
+std::vector<int> dijkstra(std::vector<std::std::vector<double>> costs) {
+  /* Creating the Dijktra's predefined and distance vectors */
+  std::vector<double> dist(this->num_nodes(), std::numeric_limits<double>::max());
+  std::vector<int>    prev(this->num_nodes(), -1);
+  dist[0] = 0.0;
+
+  /* Priority queue of nodes that were not yet analyzed
+  Queue uses a std::pair<int, int> where the first int
+  is the distance and the second is the node number */
+  std::priority_queue<std::pair<int, int>,
+                      std::vector<std::pair<int,int>>,
+                      std::greater<std::pair<int,int>>> q;
+  q.emplace(dist[0], 0);
+
+  while (!q.empty()) {
+    /* Gets the node with minimum distance */
+    int next = q.top().second;
+    q.pop();
+
+    /* For all of its neigboors
+    make the dijkstra relaxation step */
+    for (auto j : this->out_node[next]) {
+      int new_dist = dist[next] + cost[i][j];
+      if (dist[j] > new_dist) {
+        prev[j] = next;
+        dist[j] = new_dist;
+        q.emplace(dist[j], j);
+      }
+    }
+  }
+  /* Returns the shortest path tree */
+  return (prev);
+  }
+
   std::vector<int> dijkstra(double multiplier) {
     /* Creating the Dijktra's predefined and distance vectors */
     std::vector<double> dist(this->num_nodes(), std::numeric_limits<double>::max());
