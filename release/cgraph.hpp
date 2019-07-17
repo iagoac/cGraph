@@ -122,7 +122,7 @@ public:
   /*********************************************************************
   ********************** Shortest path algorithms **********************
   *********************************************************************/
-std::vector<int> dijkstra(std::vector<std::std::vector<double>> costs) {
+std::vector<int> dijkstra(std::vector<std::vector<double>> costs) {
   /* Creating the Dijktra's predefined and distance vectors */
   std::vector<double> dist(this->num_nodes(), std::numeric_limits<double>::max());
   std::vector<int>    prev(this->num_nodes(), -1);
@@ -144,7 +144,7 @@ std::vector<int> dijkstra(std::vector<std::std::vector<double>> costs) {
     /* For all of its neigboors
     make the dijkstra relaxation step */
     for (auto j : this->out_node[next]) {
-      int new_dist = dist[next] + cost[i][j];
+      int new_dist = dist[next] + costs[next][j];
       if (dist[j] > new_dist) {
         prev[j] = next;
         dist[j] = new_dist;
